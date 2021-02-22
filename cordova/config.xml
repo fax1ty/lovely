@@ -11,7 +11,7 @@
   <preference name='UseStrictSSL' value='false' />
 
   <plugin name='cordova-plugin-vibration' spec='https://github.com/maxappsmobile/cordova-plugin-vibration.git' />
- <plugin name='cordova-plugin-dbmeter' spec='https://github.com/akofman/cordova-plugin-dbmeter.git' />
+ <plugin name='cordova-plugin-dbmeter' spec='https://github.com/akofman/cordova-plugin-dbmeter.git:plugin' />
   <plugin name='cordova-plugin-audio-recorder-api' spec='https://github.com/emj365/cordova-plugin-audio-recorder-api.git' />
 
   <platform name='android'>
