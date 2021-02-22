@@ -1,0 +1,6 @@
+{
+  "main": "src",
+  "dependencies": {
+    "tabris": "^3.7.1"
+  }
+}

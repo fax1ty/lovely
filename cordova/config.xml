@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<widget id='app.lovely' version='0.0.3' xmlns='http://www.w3.org/ns/widgets' xmlns:android='http://schemas.android.com/apk/res/android'>
+  <name>Lovely</name>
+  <description>Love in the air</description>
+  <author email='fax1ty.ru@gmail.com'>
+    Artyom Davydov
+  </author>
+  <preference name='EnableDeveloperConsole' value='true' />
+  <preference name='DisallowOverscroll' value='true' />
+  <preference name='Orientation' value='portrait' />
+  <preference name='UseStrictSSL' value='false' />
+
+  <plugin name='cordova-plugin-vibration' spec='https://github.com/maxappsmobile/cordova-plugin-vibration.git' />
+ <plugin name='cordova-plugin-dbmeter' spec='https://github.com/akofman/cordova-plugin-dbmeter.git' />
+  <plugin name='cordova-plugin-audio-recorder-api' spec='https://github.com/emj365/cordova-plugin-audio-recorder-api.git' />
+
+  <platform name='android'>
+    <edit-config file='AndroidManifest.xml' target='/manifest/application' mode='merge'>
+      <application android:usesCleartextTraffic='true' />
+    </edit-config>
+  </platform>
+  <platform name='ios'>
+    <edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
+        <string>need microphone access to record sounds</string>
+    </edit-config>
+  </platform>
+</widget>
