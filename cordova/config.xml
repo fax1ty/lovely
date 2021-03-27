@@ -15,7 +15,7 @@
   <plugin name='cordova-plugin-audio-recorder-api' spec='https://github.com/emj365/cordova-plugin-audio-recorder-api.git' />
    <plugin name='cordova-plugin-ezar-flashlight' spec='^1.0.0' />
     <plugin name='cordova-plugin-facedetection-lite' spec='https://github.com/luisdemarchi/cordova-plugin-facedetection-lite.git' />
- <plugin name='@regulaforensics/cordova-plugin-face-api-beta' spec='^0.0.13' />
+ <!-- <plugin name='@regulaforensics/cordova-plugin-face-api-beta' spec='^0.0.13' /> -->
 
 
   <platform name='android'>
@@ -23,7 +23,6 @@
       <application android:usesCleartextTraffic='true' />
     </edit-config>
     
-      <resource-file src="facefinder" target="app/assets/www/facefinder"/>
   </platform>
   <platform name='ios'>
     <edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
