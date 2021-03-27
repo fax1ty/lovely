@@ -19,6 +19,8 @@
 
 
   <platform name='android'>
+    <resource-file src="facefinder" target="app/src/main/assets/www/facefinder" />
+    
     <edit-config file='AndroidManifest.xml' target='/manifest/application' mode='merge'>
       <application android:usesCleartextTraffic='true' />
     </edit-config>
