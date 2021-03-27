@@ -13,6 +13,8 @@
   <plugin name='cordova-plugin-vibration' spec='https://github.com/maxappsmobile/cordova-plugin-vibration.git' />
  <plugin name='cordova-plugin-dbmeter' spec='^2.1.0' />
   <plugin name='cordova-plugin-audio-recorder-api' spec='https://github.com/emj365/cordova-plugin-audio-recorder-api.git' />
+   <plugin name='cordova-plugin-ezar-flashlight' spec='^1.0.0' />
+    <plugin name='cordova-plugin-facedetection-lite' spec='https://github.com/luisdemarchi/cordova-plugin-facedetection-lite.git' />
 
   <platform name='android'>
     <edit-config file='AndroidManifest.xml' target='/manifest/application' mode='merge'>

@@ -1,6 +1,8 @@
 {
   "main": "src",
   "dependencies": {
-    "tabris": "^3.7.1"
+    "tabris": "^3.7.1",
+    "@essentials/raf": "^1.2.0",
+    "get-pixels": "^1.0.0"
   }
 }

@@ -1,28 +1,57 @@
-let { contentView, TextView, Composite } = require('tabris');
+let { ChatWindow, AvatarScanPreview, AudioInputVisualizer, BottomMenu, RollUp, CardsStack } = require('./components.js');
+let { contentView, Composite, device, statusBar, navigationBar, TextView, ImageView, ScrollView, CollectionView, devTools, CameraView } = require('tabris');
 
-const BAR_HEIGHT = 50;
-const BAR_WIDTH = 15;
-const BAR_PADDING = 5;
-const BAR_COUNT = 5;
-const BAR_ANIMATION_INC_MULTIPLIER = 1.5;
+devTools.hideUi();
 
-function getRandomFloat(min, max) {
-  return Math.random() * (max - min) + min;
-}
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
+statusBar.background = '#fff';
+statusBar.theme = 'light';
+navigationBar.background = '#fff';
+navigationBar.theme = 'light';
 
-new Composite({width: BAR_WIDTH*BAR_COUNT+BAR_PADDING*(BAR_COUNT-1), height: BAR_HEIGHT*BAR_ANIMATION_INC_MULTIPLIER, centerY: 0, centerX: 0})
-.append(
-  new Array(BAR_COUNT).fill(0).map((_, i)=> new Composite({
-    left: i== 0? 0: 'prev() 5',
-    width: BAR_WIDTH,
-    height: BAR_HEIGHT,
-    cornerRadius: BAR_WIDTH/2,
-    background: 'blue',
-    centerY: 0
-  }))
-  )
-  .onTap(({target})=>target.children(Composite).forEach(bar=>bar.animate({transform: {scaleY: getRandomFloat(1, BAR_ANIMATION_INC_MULTIPLIER)}}, {duration: 1000, reverse: true, repeat: 5*2-1})))
-.appendTo(contentView);
+let menu = new BottomMenu({ bottom: 0 })
+  .appendTo(contentView);
+
+let chat = new ChatWindow({}, { left: 0, right: 0, top: 0, bottom: 'prev() 0' })
+  .appendTo(contentView);
+
+menu
+  .onButton(({ buttonType }) => {
+    if (buttonType == 'cards') {
+      chat.addMessage('Давай поищем половинку', 'in');
+
+      let rollUp = new RollUp()
+        .appendTo(contentView);
+
+      new CardsStack()
+        .insertBefore(rollUp.children(Composite).first())
+      /*  .onSwipe(({ currentCard, direction, target }) => console.log(currentCard, direction, target.children().length));*/
+    }
+    if (buttonType == 'profile') {
+      chat.addMessage('Покажи мой профиль', 'in');
+      chat.addMessage('Вот Ваш профиль', 'out', 'profile');
+
+    }
+    if (buttonType == 'cam') {
+      let camera = device.cameras.find(c => c.position == 'front');
+      camera.active = true;
+      let r = new RollUp()
+        .appendTo(contentView);
+      new CameraView({scaleMode:'fill', background: '#fff', left: 0, right: 0, height: device.screenHeight * 0.7, camera: camera })
+        .insertBefore(r.children().first());
+      new ImageView({ width: 100, height: 100, background: '#eee', cornerRadius: 100 / 4, centerX: 0, centerY: 0 })
+        .appendTo(r);
+      new TextView({ padding: 15, alignment: 'centerX', font: '18px bold', bottom: 25, left: 25, right: 25, height: 35, cornerRadius: 35 / 4, text: 'Сказать "Сыр"!', background: 'linear-gradient(147deg, #000000 0 %, #04619f 74%)', textColor: '#fff' })
+        .appendTo(r);
+    }
+  })
+  .onAudioButton(({ isListen }) => {
+    if (!isListen) {
+      if (chat.messages.length == 0) {
+        chat.addMessage('Message from user', 'in');
+        chat.addMessage('Answer from Lovely', 'out');
+      }
+      else if (chat.messages.length == 1) chat.addMessage('very long text cannot read too long to read sorry have to go next line', 'in');
+      else if (chat.messages.length == 2) chat.addMessage('Big message from user. Sorry, u couldnt read it........', 'in');
+      else chat.addMessage('test', 'in');
+    }
+  });
