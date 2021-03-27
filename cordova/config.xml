@@ -20,6 +20,8 @@
     <edit-config file='AndroidManifest.xml' target='/manifest/application' mode='merge'>
       <application android:usesCleartextTraffic='true' />
     </edit-config>
+    
+      <resource-file src="facefinder" target="app/assets/www/facefinder"/>
   </platform>
   <platform name='ios'>
     <edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
