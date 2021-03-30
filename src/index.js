@@ -1,5 +1,7 @@
 let { ChatWindow, AvatarScanPreview, AudioInputVisualizer, BottomMenu, RollUp, CardsStack } = require('./components.js');
-let { contentView, Composite, device, statusBar, navigationBar, TextView, ImageView, ScrollView, CollectionView, devTools, CameraView } = require('tabris');
+let { app, contentView, Composite, device, statusBar, navigationBar, TextView, ImageView, ScrollView, CollectionView, devTools, CameraView, permission } = require('tabris');
+let { initBytesToHex, bytesToHex, getMimeByMagicBytes } = require('./libs/utils.js');
+let getJpegData = require('./libs/image_decoders/jpeg.js');
 
 devTools.hideUi();
 
@@ -7,6 +9,11 @@ statusBar.background = '#fff';
 statusBar.theme = 'light';
 navigationBar.background = '#fff';
 navigationBar.theme = 'light';
+
+initBytesToHex();
+facedetection.initFaceDetection(5, './facefinder', result => {
+  console.log('Результат инициализации модели распознания лиц: ' + result);
+});
 
 let menu = new BottomMenu({ bottom: 0 })
   .appendTo(contentView);
@@ -32,33 +39,29 @@ menu
 
     }
     if (buttonType == 'cam') {
-      facedetection.initFaceDetection(5, './app/src/facefinder', result => {
-        console.log(result);
-        let camera = device.cameras.find(c => c.position == 'front');
-        camera.active = true;
-        let res = camera.availableCaptureResolutions[0];
-        camera.captureResolution = res;
-        camera.captureImage()
-          .then(image => {
-            image.arrayBuffer()
-              .then(rgba => {
-                facedetection.detections(rgba, res.width, res.height, res.width * 0.2, res.width * 1.2, 0.1, res => console.log(res));
-              })
-              .catch(err => console.error(err))
-
-          })
-          .catch(err => console.error(err));
-      });
-      /*  facedetection.detections(rgba, cameraMiniWidth, cameraMiniHeight, cameraMiniWidth * 0.2, cameraMiniWidth * 1.2, 0.1, res => console.log(res), err => console.error(err)); /*
-
-        /*  let r = new RollUp()
-            .appendTo(contentView);
-          new CameraView({scaleMode:'fill', background: '#fff', left: 0, right: 0, height: device.screenHeight * 0.7, camera: camera })
-            .insertBefore(r.children().first());
-          new ImageView({ width: 100, height: 100, background: '#eee', cornerRadius: 100 / 4, centerX: 0, centerY: 0 })
-            .appendTo(r);
-          new TextView({ padding: 15, alignment: 'centerX', font: '18px bold', bottom: 25, left: 25, right: 25, height: 35, cornerRadius: 35 / 4, text: 'Сказать "Сыр"!', background: 'linear-gradient(147deg, #000000 0 %, #04619f 74%)', textColor: '#fff' })
-            .appendTo(r); */
+      permission.requestAuthorization('camera')
+        .then(() => {
+          ezar.initializeVideoOverlay(() => {
+            ezar.getBackCamera()
+              .start(
+                setTimeout(() => {
+                  ezar.watchFaces(result => {
+                      console.log(result);
+                    },
+                    err => console.error(err));
+                }, 1500),
+                err => console.error(err));
+          }, err => console.error(err));
+        })
+        .catch(err => console.error(err));
+      /*  let r = new RollUp()
+          .appendTo(contentView);
+        new CameraView({scaleMode:'fill', background: '#fff', left: 0, right: 0, height: device.screenHeight * 0.7, camera: camera })
+          .insertBefore(r.children().first());
+        new ImageView({ width: 100, height: 100, background: '#eee', cornerRadius: 100 / 4, centerX: 0, centerY: 0 })
+          .appendTo(r);
+        new TextView({ padding: 15, alignment: 'centerX', font: '18px bold', bottom: 25, left: 25, right: 25, height: 35, cornerRadius: 35 / 4, text: 'Сказать "Сыр"!', background: 'linear-gradient(147deg, #000000 0 %, #04619f 74%)', textColor: '#fff' })
+          .appendTo(r); */
     }
   })
   .onAudioButton(({ isListen }) => {

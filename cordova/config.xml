@@ -14,9 +14,8 @@
  <plugin name='cordova-plugin-dbmeter' spec='^2.1.0' />
   <plugin name='cordova-plugin-audio-recorder-api' spec='https://github.com/emj365/cordova-plugin-audio-recorder-api.git' />
    <plugin name='cordova-plugin-ezar-flashlight' spec='^1.0.0' />
-    <plugin name='cordova-plugin-facedetection-lite' spec='https://github.com/luisdemarchi/cordova-plugin-facedetection-lite.git' />
- <!-- <plugin name='@regulaforensics/cordova-plugin-face-api-beta' spec='^0.0.13' /> -->
-
+   <plugin name='cordova-plugin-ezar-facedetector-mod' spec='^1.0.3' />
+   <plugin name='npm i cordova-plugin-ezar-videooverlay-mod' spec='^1.3.5' />
 
   <platform name='android'>
     <resource-file src="facefinder" target="app/src/main/assets/www/facefinder" />
