@@ -51,7 +51,9 @@ menu
                     err => console.error(err));
                 }, 1500),
                 err => console.error(err));
-          }, err => console.error(err));
+          }, err => console.error(err), {
+            fitWebViewToCameraView: false
+          });
         })
         .catch(err => console.error(err));
       /*  let r = new RollUp()
