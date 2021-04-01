@@ -11,9 +11,6 @@ navigationBar.background = '#fff';
 navigationBar.theme = 'light';
 
 initBytesToHex();
-facedetection.initFaceDetection(5, './facefinder', result => {
-  console.log('Результат инициализации модели распознания лиц: ' + result);
-});
 
 let menu = new BottomMenu({ bottom: 0 })
   .appendTo(contentView);
@@ -41,29 +38,16 @@ menu
     if (buttonType == 'cam') {
       permission.requestAuthorization('camera')
         .then(() => {
-          ezar.initializeVideoOverlay(() => {
-            ezar.getBackCamera()
-              .start(
-                setTimeout(() => {
-                  ezar.watchFaces(result => {
-                      console.log(result);
-                    },
-                    err => console.error(err));
-                }, 1500),
-                err => console.error(err));
-          }, err => console.error(err), {
-            fitWebViewToCameraView: false
-          });
+          let r = new RollUp()
+            .appendTo(contentView);
+          new CameraView({ scaleMode: 'fill', background: '#fff', left: 0, right: 0, height: device.screenHeight * 0.7, camera: camera })
+            .insertBefore(r.children().first());
+          new ImageView({ width: 100, height: 100, background: '#eee', cornerRadius: 100 / 4, centerX: 0, centerY: 0 })
+            .appendTo(r);
+          new TextView({ padding: 15, alignment: 'centerX', font: '18px bold', bottom: 25, left: 25, right: 25, height: 35, cornerRadius: 35 / 4, text: 'Сказажите "Сыр!", всё остальное мы сделаем сами.', background: 'linear-gradient(147deg, #000000 0 %, #04619f 74%)', textColor: '#fff' })
+            .appendTo(r);
         })
         .catch(err => console.error(err));
-      /*  let r = new RollUp()
-          .appendTo(contentView);
-        new CameraView({scaleMode:'fill', background: '#fff', left: 0, right: 0, height: device.screenHeight * 0.7, camera: camera })
-          .insertBefore(r.children().first());
-        new ImageView({ width: 100, height: 100, background: '#eee', cornerRadius: 100 / 4, centerX: 0, centerY: 0 })
-          .appendTo(r);
-        new TextView({ padding: 15, alignment: 'centerX', font: '18px bold', bottom: 25, left: 25, right: 25, height: 35, cornerRadius: 35 / 4, text: 'Сказать "Сыр"!', background: 'linear-gradient(147deg, #000000 0 %, #04619f 74%)', textColor: '#fff' })
-          .appendTo(r); */
     }
   })
   .onAudioButton(({ isListen }) => {
