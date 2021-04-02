@@ -1,5 +1,5 @@
 let { contentView, TextView, Composite, CameraView, device, permission, ImageView, CollectionView, ScrollView } = require('tabris');
-let Fatina = require('./fatina.js');
+let Fatina = require('./libs/fatina.js');
 
 function calcBarHeight(initHeight, i, count) {
   if (i == 0) return initHeight * 0.6;
