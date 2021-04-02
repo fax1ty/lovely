@@ -12,10 +12,9 @@
 
   <plugin name='cordova-plugin-vibration' spec='https://github.com/maxappsmobile/cordova-plugin-vibration.git' />
  <plugin name='cordova-plugin-dbmeter' spec='^2.1.0' />
-  <plugin name='cordova-plugin-audio-recorder-api' spec='https://github.com/emj365/cordova-plugin-audio-recorder-api.git' />
    <plugin name='cordova-plugin-ezar-flashlight' spec='^1.0.0' />
-   <plugin name='cordova-plugin-speechrecognition' spec='https://github.com/fax1ty/cordova-speech.git' />
-      <plugin name='cordova-plugin-background-upload' spec='https://github.com/spoonconsulting/cordova-plugin-background-upload.git' />
+   <plugin name='cordova-speech' spec='https://github.com/fax1ty/cordova-speech.git' />
+      <plugin name='cordova-plugin-background-upload' spec='^1.1.0' />
 
   <platform name='android'>
     <edit-config file='AndroidManifest.xml' target='/manifest/application' mode='merge'>
